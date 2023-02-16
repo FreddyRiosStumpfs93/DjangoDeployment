@@ -25,6 +25,9 @@ from django.conf import settings
 import os
 import joblib
 
+# solucionar error CSRF verification failed. Request aborted.
+from django.views.decorators.csrf import csrf_exempt
+
 
 
 class ClasificacionesView(viewsets.ModelViewSet):
@@ -118,6 +121,7 @@ def cxcontact(request):
     form = ApprovalForm()
     return render(request, 'myform/cxform.html', {'form':form})
 
+@csrf_exempt
 def cxcontact2(request):
     if request.method=='POST':
         form = ApprovalForm(request.POST)
