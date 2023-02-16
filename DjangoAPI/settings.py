@@ -33,7 +33,7 @@ DEBUG = True
 # ALLOWED_HOSTS = ['']
 
 # Para produccion
-ALLOWED_HOST = ['https://clasificacionarancelaria.herokuapp.com/','*']
+ALLOWED_HOST = ['*']
 CRISPY_TEMPLATE_PACK = 'bootstrap4'
 
 STATIC_URL = '/static/'
