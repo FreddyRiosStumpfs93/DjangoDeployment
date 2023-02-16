@@ -33,7 +33,7 @@ DEBUG = True
 # ALLOWED_HOSTS = ['']
 
 # Para produccion
-ALLOWED_HOST = ['web-production-299e.up.railway.app', '*']
+ALLOWED_HOSTS = ['web-production-299e.up.railway.app', '*']
 CRISPY_TEMPLATE_PACK = 'bootstrap4'
 
 STATIC_URL = '/static/'
