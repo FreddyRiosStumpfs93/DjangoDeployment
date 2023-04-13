@@ -11,6 +11,7 @@ https://docs.djangoproject.com/en/4.1/ref/settings/
 """
 import os.path
 from pathlib import Path
+import DjangoAPI.db as DataBase
 
 # Build paths inside the project like this: BASE_DIR / 'subdir'.
 # DESARROLLO
@@ -53,9 +54,16 @@ INSTALLED_APPS = [
     'django.contrib.sessions',
     'django.contrib.messages',
     'django.contrib.staticfiles',
-    'MyAPI',
     'rest_framework',
+    ## libs
     'crispy_forms',
+    'widget_tweaks',
+    # Apps
+    'MyAPI',
+    'user',
+    # 'core.homepage',
+    'homepage',
+    'login',
 ]
 
 MIDDLEWARE = [
@@ -66,6 +74,7 @@ MIDDLEWARE = [
     'django.contrib.auth.middleware.AuthenticationMiddleware',
     'django.contrib.messages.middleware.MessageMiddleware',
     'django.middleware.clickjacking.XFrameOptionsMiddleware',
+    'crum.CurrentRequestUserMiddleware'
 ]
 
 ROOT_URLCONF = 'DjangoAPI.urls'
@@ -99,16 +108,22 @@ WSGI_APPLICATION = 'DjangoAPI.wsgi.application'
 #     }
 # }
 
-DATABASES = {
-    'default': {
-        'ENGINE': 'django.db.backends.postgresql',
-        'NAME' : 'mydb1',
-        'USER' : 'user1',
-        'PASSWORD' : 'pass1',
-        'HOST' : 'localhost',
-        'PORT' : '5432',
-    }
-}
+# DATABASES = {
+#     'default': {
+#         'ENGINE': 'django.db.backends.postgresql_psycopg2',
+#         'NAME' : 'mydb1',
+#         'USER' : 'user1',
+#         'PASSWORD' : 'pass1',
+#         'HOST' : 'localhost',
+#         'PORT' : '5432',
+#     }
+# }
+
+# Development
+DATABASES = DataBase.POSTGRESQL
+
+# Deploy
+# DATABASES = DataBase.SQLITE
 
 
 # Password validation
@@ -133,7 +148,7 @@ AUTH_PASSWORD_VALIDATORS = [
 # Internationalization
 # https://docs.djangoproject.com/en/4.1/topics/i18n/
 
-LANGUAGE_CODE = 'en-us'
+LANGUAGE_CODE = 'es-ec'
 
 TIME_ZONE = 'UTC'
 
@@ -151,3 +166,15 @@ STATIC_URL = 'static/'
 # https://docs.djangoproject.com/en/4.1/ref/settings/#default-auto-field
 
 DEFAULT_AUTO_FIELD = 'django.db.models.BigAutoField'
+
+LOGIN_REDIRECT_URL = '/myapi/dashboard/'
+
+LOGOUT_REDIRECT_URL = '/login/'
+
+LOGIN_URL = '/login/'
+
+MEDIA_ROOT = os.path.join(BASE_DIR, 'media/')
+
+MEDIA_URL = '/media/'
+
+AUTH_USER_MODEL = 'user.User'

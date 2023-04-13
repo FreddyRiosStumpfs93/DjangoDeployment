@@ -15,12 +15,25 @@ Including another URLconf
 """
 from django.contrib import admin
 from django.urls import path, include
-from MyAPI import views
-# segundo ejemplo
+from homepage.views import IndexView
+from login.views import LoginFormView, LoginFormView2
+from DjangoAPI import settings
+from django.conf.urls.static import static
 
 urlpatterns = [
     path('admin/', admin.site.urls),
-    path('', include('MyAPI.urls')),
+
     # Segundo ejemplo
     # path('apicalling/', include('apicalling.urls'))
+
+    # probando cambiar el home
+    # path('home/', include('MyAPI.urls')),
+    path('myapi/', include('MyAPI.urls')),
+    path('', IndexView.as_view(), name='index'),
+    path('login/', include('login.urls')),
+    path('user/', include('user.urls')),
+
 ]
+
+## SOLO VÁLIDO PARA DESARROLLO
+urlpatterns += static(settings.MEDIA_URL, document_root=settings.MEDIA_ROOT)

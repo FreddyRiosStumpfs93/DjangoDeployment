@@ -1,0 +1,68 @@
+{% load static %}
+<!-- Main Sidebar Container -->
+<aside class="main-sidebar sidebar-dark-primary elevation-4">
+    <!-- Brand Logo -->
+    <a href="{% url 'myapi:dashboard' %}" class="brand-link">
+        <img src="../../dist/img/AdminLTELogo.png" alt="AdminLTE Logo" class="brand-image img-circle elevation-3"
+             style="opacity: .8">
+        <span class="brand-text font-weight-light"> HS | Code </span>
+    </a>
+
+    <!-- Sidebar -->
+    <div class="sidebar">
+        <!-- Sidebar user (optional) -->
+        <div class="user-panel mt-3 pb-3 mb-3 d-flex">
+            <div class="image">
+                <img src="{{ request.user.get_image }}" class="img-circle elevation-2" alt="User Image">
+            </div>
+            <div class="info">
+                <a href="#" class="d-block">{{ request.user.first_name }} {{ request.user.last_name}}</a>
+            </div>
+        </div>
+
+        <!-- Sidebar Menu -->
+        <nav class="mt-2">
+            <ul class="nav nav-pills nav-sidebar flex-column" data-widget="treeview" role="menu" data-accordion="false">
+                <!-- Add icons to the links using the .nav-icon class
+                     with font-awesome or any other icon font library -->
+                <!-- Forms -->
+                <li class="nav-item">
+                    <a href="{% url 'myapi:chapter_list' %}" class="nav-link">
+                        <i class="nav-icon fas fa-edit"></i>
+                        <p>
+                            Capítulos
+                        </p>
+                    </a>
+                </li>
+                <li class="nav-item">
+                    <a href="{% url 'myapi:position_list' %}" class="nav-link">
+                        <i class="nav-icon fas fa-edit"></i>
+                        <p>
+                            Posiciones Arancelarias
+                        </p>
+                    </a>
+                </li>
+                <li class="nav-item">
+                    <a href="{% url 'myapi:classification_list' %}" class="nav-link">
+                        <i class="nav-icon fas fa-edit"></i>
+                        <p>
+                            Clasificaciones
+                        </p>
+                    </a>
+                </li>
+                <li class="nav-item">
+                    <a href="{% url 'user:user_list' %}" class="nav-link">
+                        <i class="nav-icon fas fa-user-friends"></i>
+                        <p>
+                            Usuarios
+                        </p>
+                    </a>
+                </li>
+
+
+            </ul>
+        </nav>
+        <!-- /.sidebar-menu -->
+    </div>
+    <!-- /.sidebar -->
+</aside>

@@ -1,0 +1,65 @@
+{% extends 'app/app_home.html' %}
+
+<!-- yo le agregué para probar  -->
+{% load static %}
+
+{% block body %}
+<body class="hold-transition sidebar-mini">
+<div class="wrapper">
+    {% include 'app/app_header.html' %}
+    <!-- Main content -->
+    <section class="content">
+        <div class="container-fluid">
+            <div class="row">
+                <!-- left column -->
+                <div class="col-md-6">
+                    <!-- general form elements -->
+                    <div class="card card-primary">
+                        <div class="card-header">
+                            <h3 class="card-title">Quick Example</h3>
+                        </div>
+                        <!-- /.card-header -->
+                        <!-- form start -->
+                        <form>
+                            {% block content %}
+
+                            {% endblock %}
+
+                            <div class="card-footer">
+                                <button type="submit" class="btn btn-primary">Submit</button>
+                            </div>
+                        </form>
+                    </div>
+                    <!-- /.card -->
+
+                    <!-- general form elements -->
+
+
+                </div>
+                <!--/.col (left) -->
+                <!-- right column -->
+                <div class="col-md-6">
+                </div>
+                <!--/.col (right) -->
+            </div>
+            <!-- /.row -->
+        </div><!-- /.container-fluid -->
+    </section>
+    <!-- /.content -->
+
+    {% include 'app/app_footer.html' %}
+</div>
+<!-- ./wrapper -->
+
+<!-- Block javascript -->
+{% block javascript %}
+
+{% endblock %}
+<!--<script>-->
+<!--$(function () {-->
+<!--  bsCustomFileInput.init();-->
+<!--});-->
+<!--</script>-->
+</body>
+
+{% endblock %}

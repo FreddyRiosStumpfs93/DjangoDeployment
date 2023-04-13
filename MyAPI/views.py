@@ -25,24 +25,30 @@ from django.conf import settings
 import os
 import joblib
 
+# solucionar error CSRF verification failed. Request aborted.
+from django.views.decorators.csrf import csrf_exempt
+
+# Librerias para template
+from django.views.generic import ListView, DetailView
+
 
 
 class ClasificacionesView(viewsets.ModelViewSet):
     queryset = clasificacion.objects.all()
     serializer_class = clasificacionSerializers
 
-def ohevalue(df):
-    ohe_col = joblib.load('modelo_entrenado.pkl')
-    cat_columns = ['Descripcion', 'Material']
-    df_processed = pd.get_dummies(df, columns=cat_columns)
-    newdict = {}
-    for i in ohe_col:
-        if i in df_processed.columns:
-          newdict[i] = df_processed[i].values
-        else:
-            newdict[i] = 0
-    newdf = pd.DataFrame(newdict)
-    return newdf
+# def ohevalue(df):
+#     ohe_col = joblib.load('modelo_entrenado.pkl')
+#     cat_columns = ['Descripcion', 'Material']
+#     df_processed = pd.get_dummies(df, columns=cat_columns)
+#     newdict = {}
+#     for i in ohe_col:
+#         if i in df_processed.columns:
+#           newdict[i] = df_processed[i].values
+#         else:
+#             newdict[i] = 0
+#     newdf = pd.DataFrame(newdict)
+#     return newdf
 
 def myform(request):
     if request.method == "POST":
@@ -118,6 +124,7 @@ def cxcontact(request):
     form = ApprovalForm()
     return render(request, 'myform/cxform.html', {'form':form})
 
+@csrf_exempt
 def cxcontact2(request):
     if request.method=='POST':
         form = ApprovalForm(request.POST)
@@ -143,7 +150,35 @@ def cxcontact2(request):
                 messages.success(request, 'Application Status: {}'.format(answer))
 
     form = ApprovalForm()
-    return render(request, 'myform/cxform.html', {'form':form})
+    # return render(request, 'myform/cxform.html', {'form':form})
+
+    # prueba template
+    return render(request, 'myform/home.html', {'form':form})
+
+# @csrf_exempt probando si funciona en template comentando esta linea
+def cxcontact3(request):
+    if request.method=='POST':
+        form = ApprovalForm(request.POST)
+        if form.is_valid():
+            descripcion = form.cleaned_data['descripcion']
+            material = form.cleaned_data['material']
+
+            mydata = [descripcion+" de "+material]
+            print('Valor de mydata: '+ str(mydata))
+            cont = len(mydata.__str__())
+            if cont<=25:
+                messages.success(request, 'No se puede realizar la búsqueda, favor ingrese más información de la mercadería')
+            else:
+                print(mydata)
+                print(approvereject(mydata))
+                answer = approvereject(mydata)
+                messages.success(request, 'Application Status: {}'.format(answer))
+
+    form = ApprovalForm()
+    # return render(request, 'app/app_body.html', {'form':form})
+    # return render(request, 'classification/classify.html', {'form':form})
+    return render(request, 'classification/classify.html', {'form':form})
+
 
 """
 Segundo ejemplo
@@ -171,3 +206,13 @@ class FileHandling(APIView):
         fs = FileSystemStorage
         path_image_1 = fs.save(os.path.join(settings.BASE_DIR, "learning", pdf_file.name), pdf_file)
         return JsonResponse({"status":"file saved"})
+
+class vistaClasificar(DetailView):
+    model = clasificacion
+    template_name = 'cxform.html'
+
+class principal(DetailView):
+    template_name = 'index.html'
+
+def myfirstview(request):
+    return render (request, 'myform/home.html')

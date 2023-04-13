@@ -1,0 +1,132 @@
+{% load static %}
+<!-- Navigation-->
+<nav class="navbar navbar-expand-lg navbar-light fixed-top py-3" id="mainNav">
+    <div class="container px-4 px-lg-5">
+        <a class="navbar-brand" href="#page-top">HS|Data</a>
+        <button class="navbar-toggler navbar-toggler-right" type="button" data-bs-torggle="collapse" data-bs-target="#navbarResponsive" aria-controls="navbarResponsive" aria-expanded="false" aria-label="Toggle navigation"><span class="navbar-toggler-icon"></span></button>
+        <div class="collapse navbar-collapse" id="navbarResponsive">
+            <ul class="navbar-nav ms-auto my-2 my-lg-0">
+                <li class="nav-item"><a class="nav-link" href="#about">Acerca de</a></li>
+                <li class="nav-item"><a class="nav-link" href="#services">Sistema Armonizado</a></li>
+                <li class="nav-item"><a class="nav-link" href="#mineria">Minería de Datos</a></li>
+                <li class="nav-item"><a class="nav-link" href="#contact">Contacto</a></li>
+<!--                <li class="nav-item"><a class="nav-link" href="{% url 'login' %}"><i class="fas fa-sign-in-alt"></i> Login</a></li>-->
+                <li class="nav-item">
+                    {% if request.user.is_authenticated %}
+                        <a class="nav-link" href="{% url 'myapi:dashboard' %}">
+                            <i class="bx bx-user"></i> Bienvenido {{ request.user.username }}
+                        </a>
+                    {% else %}
+                        <a class="nav-link" href="{% url 'login' %}">
+                            <i class="bx bx-door-open"></i> Login
+                        </a>
+                    {% endif %}
+
+                </li>
+            </ul>
+        </div>
+    </div>
+</nav>
+<!-- Masthead-->
+<header class="masthead">
+    <div class="container px-4 px-lg-5 h-100">
+        <div class="row gx-4 gx-lg-5 h-100 align-items-center justify-content-center text-center">
+            <div class="col-lg-8 align-self-end">
+                <h1 class="text-white font-weight-bold">Clasificación Arancelaria de Mercaderías según el Sistema Armonizado</h1>
+                <hr class="divider" />
+            </div>
+            <div class="col-lg-8 align-self-baseline">
+                <p class="text-white-75 mb-5">El software que ayuda a las personas vinculadas a la actividad aduanera a optimizar y especializar el proceso de clasificación arancelaria mediante minería de datos</p>
+            </div>
+        </div>
+    </div>
+</header>
+
+        <!-- About-->
+        <section class="page-section bg-primary" id="about">
+            <div class="container px-4 px-lg-5">
+                <div class="row gx-4 gx-lg-5 justify-content-center">
+                    <div class="col-lg-8 text-center">
+                        <h2 class="text-white mt-0">HS|Data</h2>
+                        <hr class="divider divider-light" />
+                        <p class="text-white-75 mb-4">HS|Data es un software que brinda a las personas vinculadas a la actividad aduanera sugerencias sobre Clasificaciones Arancelarias según el Sistema Armonizado. La clasificación se basa en procesos de Minería de Datos realizado sobre aproximadamente 55 millones de registros de operaciones de comercio extraídos del Portal de Datos Abiertos de la Dirección Nacional de Aduanas.</p>
+                        {% if request.user.is_authenticated %}
+                        <a class="btn btn-light btn-xl" href="{% url 'myapi:dashboard' %}">¡Empecemos a clasificar!</a>
+                        {% else %}
+                        <a class="btn btn-light btn-xl" href="{% url 'login' %}">¡Empecemos a clasificar!</a>
+                        {% endif %}
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <!-- Harmonized System-->
+        <section class="page-section" id="services">
+            <div class="container px-4 px-lg-5">
+                <h2 class="text-center mt-0">Sistema Armonizado</h2>
+                <hr class="divider" />
+                <p class="text-muted mb-0">El Sistema Armonizado de Designación y Codificación de Mercancías (SA) es una nomenclatura internacional
+                establecida originalmente por el Consejo de Cooperación Aduanera y desde 1994, por la Organización Mundial de Aduanas
+                    (OMA).
+                    El Sistema Armonizado está constituido por grupos de mercancías ordenados sistemáticamente siguiendo determinados criterios de
+                    agrupamiento. Está compuesto por:
+                </p>
+                <div class="row gx-4 gx-lg-5">
+                    <div class="col-lg-3 col-md-6 text-center">
+                        <div class="mt-5">
+                            <div class="mb-2"><i class="bi-gem fs-1 text-primary"></i></div>
+                            <h3 class="h4 mb-2">Secciones</h3>
+                            <p class="text-muted mb-0">Our themes are updated regularly to keep them bug free!</p>
+                        </div>
+                    </div>
+                    <div class="col-lg-3 col-md-6 text-center">
+                        <div class="mt-5">
+                            <div class="mb-2"><i class="bi-laptop fs-1 text-primary"></i></div>
+                            <h3 class="h4 mb-2">Capítulos</h3>
+                            <p class="text-muted mb-0">All dependencies are kept current to keep things fresh.</p>
+                        </div>
+                    </div>
+                    <div class="col-lg-3 col-md-6 text-center">
+                        <div class="mt-5">
+                            <div class="mb-2"><i class="bi-globe fs-1 text-primary"></i></div>
+                            <h3 class="h4 mb-2">Partidas</h3>
+                            <p class="text-muted mb-0">You can use this design as is, or you can make changes!</p>
+                        </div>
+                    </div>
+                    <div class="col-lg-3 col-md-6 text-center">
+                        <div class="mt-5">
+                            <div class="mb-2"><i class="bi-heart fs-1 text-primary"></i></div>
+                            <h3 class="h4 mb-2">Subpartidas</h3>
+                            <p class="text-muted mb-0">Is it really open source if it's not made with love?</p>
+                        </div>
+                    </div>
+                </div>
+                 <div class="row gx-4 gx-lg-5">
+                    <div class="col-lg-3 col-md-6 text-center">
+                        <div class="mt-5">
+                            <div class="mb-2"><i class="bi-gem fs-1 text-primary"></i></div>
+                            <h3 class="h4 mb-2">Notas de sección, de capítulo y de Subpartida</h3>
+                            <p class="text-muted mb-0">Our themes are updated regularly to keep them bug free!</p>
+                        </div>
+                    </div>
+                    <div class="col-lg-3 col-md-6 text-center">
+                        <div class="mt-5">
+                            <div class="mb-2"><i class="bi-laptop fs-1 text-primary"></i></div>
+                            <h3 class="h4 mb-2">Reglas Generales de Interpretación</h3>
+                            <p class="text-muted mb-0">All dependencies are kept current to keep things fresh.</p>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <!-- Data mining-->
+        <section class="page-section bg-dark text-white" id="mineria">
+            <div class="container px-4 px-lg-5 text-center">
+                <h2 class="mb-4">Minería de datos</h2>
+                <p class="text-white-75 mb-5">Al igual que un buscador de minerales remueve la tierra para encontrar pepitas de oro,
+                la minería de datos es el proceso de clasificaci+on de grandes conjuntos de datos para encontrar información relevante y aprovechable
+                para una finalidad específica. </p>
+                <a class="btn btn-light btn-xl" href="https://startbootstrap.com/theme/creative/">Download Now!</a>
+            </div>
+        </section>

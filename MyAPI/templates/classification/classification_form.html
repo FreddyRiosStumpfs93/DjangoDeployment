@@ -1,0 +1,117 @@
+{% extends 'app/app_layout.html' %}
+{% load widget_tweaks %}
+
+{% block content %}
+<form method="post" action="." enctype="multipart/form-data">
+    <div class="card card-default">
+        <div class="card-header">
+            <h3 class="card-title">
+                {% if action == 'add' %}
+                    <i class="fas fa-plus"></i>
+                {% else %}
+                    <i class="fas fa-edit"></i>
+                {% endif %}
+                {{ title }}
+            </h3>
+        </div>
+    </div>
+
+    <div class="card-body">
+        {% csrf_token %}
+        <input type="hidden" name="action" value="{{ action }}">
+        {% if form.errors %}
+        <div class="alert alert-danger alert-dismissible">
+            <button type="button" class="close" data-dismiss="alert" aria-hidden="true">x</button>
+            <h5><i class="icon fas fa-ban"></i> Ha ocurrido un error al guardar registro </h5>
+            <ul>
+                {% for field in form %}
+                    {% for error in field.error %}
+                        <li> {{ error }}</li>
+                    {% endfor %}
+                {% endfor %}
+            </ul>
+        </div>
+        {% endif %}
+
+        {% for field in form.visible_fields %}
+        <div class="form-group">
+            <label for="exampleInputEmail1">{{ field.label }}:</label>
+            {{ field|add_class:'form-control'|attr:'autocomplete:off' }}
+        </div>
+        {% endfor%}
+
+    </div>
+    <!-- /.card-body -->
+
+    <div class="card-footer">
+        <button type="button" class="btn btn-success btn-flat" id="classify_button2">
+            <i class="fa-solid fa-magnifying-glass-chart"></i> Clasificar
+        </button>
+        <button type="submit" class="btn btn-primary btn-flat" id="classify_button">
+            <i class="fas fa-save"></i> Guardar clasificación
+        </button>
+        <a href="{{ list_url }}" class="btn btn-danger btn-flat">
+            <i class="fas fa-times"></i> Cancelar
+        </a>
+    </div>
+</form>
+<script>
+    $(function (){
+        $("#classify_button2").click(function(){
+            var desc = $('input[name="description"]').val();
+            var mat = $('select[name="material"]').val();
+            var classification = $('input[name="classify"]').val();
+            if(desc ===''){
+                return false;
+            }
+                $.ajax({
+                    url: window.location.pathname,
+                    type: 'POST',
+                    data: {
+                        'action': 'search_classify',
+                        'desc': desc,
+                        'mat': mat
+                    },
+                    dataType: 'json'
+                }).done(function (data) {
+                    console.log(data[1].capitulo, data[1].descripción)
+                    $('input[name="classify"]').val(data[0].answer)
+                }).fail(function (jqXHR, textStatus, errorThrown) {
+                    console.log("entró en fail")
+                    alert(textStatus + ': ' + errorThrown);
+                }).always(function (data) {
+
+                });
+        });
+        $('form').on('submit', function (e) {
+                        e.preventDefault();
+                        var parameters = $(this).serializeArray();
+                        submit_with_ajax(window.location.pathname, 'Notificación', '¿Estas seguro de realizar la siguiente acción?', parameters, function () {
+                            location.href = '{{ list_url }}';
+                        });
+                    });
+
+    });
+
+
+    {% if form.errors %}
+        var errors = '';
+        {% for field in form %}
+            {% for error in field.errors %}
+                errors += '{{ error }}\n';
+            {% endfor %}
+        {% endfor %}
+        {% for error in form.non_field_errors %}
+            errors += '{{ error }}\n';
+        {% endfor %}
+        Swal.fire({
+            title: 'Error!',
+            text: errors,
+            icon: 'error'
+        });
+    {% endif %}
+
+
+</script>
+
+{% endblock %}

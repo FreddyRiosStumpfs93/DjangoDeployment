@@ -1,0 +1,51 @@
+{% extends 'app/app_list.html' %}
+{% load static %}
+
+{% block head_list %}
+<script src="{% static 'js/position/list.js' %}"></script>
+{% endblock %}
+
+{% block columns %}
+<tr>
+    <th class="sorting sorting_asc" aria-controls="example2"
+        aria-label="Rendering engine: activate to sort column descending" aria-sort="ascending" style="width: 10%;">
+        #Número
+    </th>
+    <th class="sorting" aria-controls="example2"
+        aria-label="Browser: activate to sort column ascending" style="width: 15%;">Capítulo
+    </th>
+    <th class="sorting" aria-controls="example2"
+        aria-label="Platform(s): activate to sort column ascending" style="width: 65%;">Descripcion
+    </th>
+        <th class="sorting" aria-controls="example2"
+        aria-label="Platform(s): activate to sort column ascending" style="width: 10%;">Acciones
+    </th>
+</tr>
+{% endblock %}
+
+{% block rows %}
+
+{% endblock %}
+
+{% block columnsFoot %}
+<tr>
+    <th class="sorting sorting_asc" aria-controls="example2"
+        aria-label="Rendering engine: activate to sort column descending" aria-sort="ascending">
+        #Número
+    </th>
+    <th class="sorting" aria-controls="example2"
+        aria-label="Browser: activate to sort column ascending">Capítulo
+    </th>
+    <th class="sorting" aria-controls="example2"
+        aria-label="Platform(s): activate to sort column ascending">Descripcion
+    </th>
+    </th>
+        <th class="sorting" aria-controls="example2"
+        aria-label="Platform(s): activate to sort column ascending">Acciones
+    </th>
+</tr>
+{% endblock %}
+
+{% block javascript %}
+
+{% endblock %}
