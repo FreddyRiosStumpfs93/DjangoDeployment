@@ -23,3 +23,14 @@ POSTGRESQL = {
         'PORT' : '5432',
     }
 }
+
+POSTGRESQLDEPLOY = {
+    'default': {
+        'ENGINE': 'django.db.backends.postgresql_psycopg2',
+        'NAME' : 'railway',
+        'USER' : 'postgres',
+        'PASSWORD' : 'R2F2elK5TQGhHPLPG1DJ',
+        'HOST' : 'containers-us-west-36.railway.app',
+        'PORT' : '7704',
+    }
+}

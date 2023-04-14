@@ -33,7 +33,7 @@ DEBUG = True
 # Para desarrollo
 # ALLOWED_HOSTS = ['']
 
-# Para produccion
+# Para produccion / put domain
 ALLOWED_HOSTS = ['web-production-299e.up.railway.app', '*']
 CRISPY_TEMPLATE_PACK = 'bootstrap4'
 
@@ -120,10 +120,10 @@ WSGI_APPLICATION = 'DjangoAPI.wsgi.application'
 # }
 
 # Development
-DATABASES = DataBase.POSTGRESQL
+# DATABASES = DataBase.POSTGRESQL
 
 # Deploy
-# DATABASES = DataBase.SQLITE
+DATABASES = DataBase.POSTGRESQLDEPLOY
 
 
 # Password validation
