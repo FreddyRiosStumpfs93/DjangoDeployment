@@ -7,5 +7,4 @@ urlpatterns = [
     # path('logout/', LogoutView.as_view(), name= 'logout'),
     path('logout/', LogoutRedirectView.as_view(), name= 'logout'),
 
-
 ]

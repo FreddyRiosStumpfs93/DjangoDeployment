@@ -7,6 +7,7 @@ from django.contrib.auth.forms import AuthenticationForm
 from django.urls import reverse_lazy
 import DjangoAPI.settings as setting
 
+
 # Create your views here.
 class LoginFormView(LoginView):
     template_name = 'login.html'

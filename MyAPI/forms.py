@@ -1,7 +1,7 @@
 from django import forms
 from django.forms import ModelForm, TextInput, Textarea, Select, HiddenInput, Form, ModelChoiceField, CharField
 # from django.forms import *
-from MyAPI.models import Chapter, Classification, Position
+from MyAPI.models import Chapter, Classification, Position, Classification2
 """
 Creamos un archivo form para utilizar ModelForm y crear de forma automática los formularios con django
 """
@@ -79,7 +79,7 @@ class ClassificationForm(ModelForm):
         self.fields['description'].widget.attrs['autofocus'] = True
 
     class Meta:
-        model = Classification
+        model = Classification2
         fields = '__all__'
         widgets = {
             'description': TextInput(
@@ -99,7 +99,7 @@ class ClassificationForm(ModelForm):
             ),
 
         }
-        # exclude = ['user_updated', 'user_creation']
+        exclude = ['user_updated', 'user_creation']
 
     def save(self, commit=True):
         data = {}

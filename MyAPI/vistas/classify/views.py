@@ -1,6 +1,6 @@
 import joblib
 from django.views.generic import CreateView, ListView
-from MyAPI.models import Classification, Chapter, Position
+from MyAPI.models import Classification, Chapter, Position, Classification2
 from MyAPI.forms import ClassificationForm
 from django.urls import reverse_lazy
 from django.utils.decorators import method_decorator
@@ -15,7 +15,8 @@ from rest_framework import status
 from django.contrib import messages
 
 class ClassificationCreateView(CreateView):
-    model = Classification
+    # model = Classification
+    model = Classification2
     form_class = ClassificationForm
     template_name = 'classification/classify.html'
     success_url = reverse_lazy('myapi:classification_list')
@@ -117,7 +118,7 @@ class ClassificationCreateView(CreateView):
 
 
 class ClassificationListView(ListView):
-    model = Classification
+    model = Classification2
     template_name = 'classification/list.html'
 
     @method_decorator(csrf_exempt)
@@ -129,7 +130,7 @@ class ClassificationListView(ListView):
     def post(self, request, *args, **kwargs):
         data = {}
         try:
-            data = Classification.objects.get(pk=request.POST['id']).toJSON()
+            data = Classification2.objects.get(pk=request.POST['id']).toJSON()
         except Exception as e:
             data['error'] = str(e)
         return JsonResponse(data)
@@ -150,12 +151,12 @@ def machine_learning(unit):
         # tfidf = joblib.load('tfidf_entrenado.pkl')
 
         #Testing data
-        # clf = joblib.load('trained_model_testing_data.pkl')
-        # tfidf = joblib.load('trained_tfidf_testing_data.pkl')
+        clf = joblib.load('trained_model_testing_data.pkl')
+        tfidf = joblib.load('trained_tfidf_testing_data.pkl')
 
         #Trained model six months data
-        clf = joblib.load('trained_model_six_months_data.pkl')
-        tfidf = joblib.load('trained_tfidf_six_months_data.pkl')
+        # clf = joblib.load('trained_model_six_months_data.pkl')
+        # tfidf = joblib.load('trained_tfidf_six_months_data.pkl')
 
         X = tfidf.transform(unit)
         y_pred = clf.predict(X)

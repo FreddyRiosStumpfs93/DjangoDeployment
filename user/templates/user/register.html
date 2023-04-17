@@ -1,0 +1,134 @@
+<!DOCTYPE html>
+{% load static %}
+{% load widget_tweaks %}
+<html lang="en">
+<head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <title>{{ title }}</title>
+    <link rel="icon" type="image/png" href="{% static 'images/libro.png' %}">
+
+    <!-- Google Font: Source Sans Pro -->
+    <link rel="stylesheet"
+          href="https://fonts.googleapis.com/css?family=Source+Sans+Pro:300,400,400i,700&display=fallback">
+    <!-- Font Awesome -->
+    <link rel="stylesheet" href="{% static 'template2/plugins/fontawesome-free/css/all.min.css' %}">
+    <!-- icheck bootstrap -->
+    <link rel="stylesheet" href="{% static 'template2/plugins/icheck-bootstrap/icheck-bootstrap.min.css' %}">
+    <!-- Theme style -->
+    <link rel="stylesheet" href="{% static 'template2/css/adminlte.min.css' %}">
+    <!-- Sweat alert -->
+    <script src="{% static 'lib/sweetalert2-9.10.0/sweetalert2.all.min.js' %}"></script>
+      <!-- jQuery -->
+  <script src="{% static 'template2/plugins/jquery/jquery.min.js' %}"></script>
+  <!-- Jquery confirm -->
+  <script src="{% static 'lib/jquery-confirm-v3.3.42/jquery-confirm.js' %}"></script>
+  <link rel="stylesheet" href="{% static 'lib/jquery-confirm-v3.3.42/jquery-confirm.min.css' %}">
+  <script src="{% static 'lib/jquery-confirm-v3.3.42/jquery-confirm.min.js' %}"></script>
+    <!-- Functions -->
+  <script src="{% static 'js/functions.js' %}"></script>
+    <!--  <script src="{% static 'js/form.js' %}"></script>-->
+
+    <!-- JQUERY-UI -->
+    <link href="{% static 'lib/jquery-ui-1.12.1/jquery-ui.min.css' %}" rel="stylesheet" />
+    <script src="{% static 'lib/jquery-ui-1.12.1/jquery-ui.min.js' %}"></script>
+
+</head>
+<body class="hold-transition register-page">
+<div class="register-box">
+    <div class="card card-outline card-primary">
+        <div class="card-header text-center">
+            <a href="{% url 'index' %}" class="h1"><b>HS</b>Code</a>
+        </div>
+        <div class="card-body">
+            <p class="login-box-msg">Registrar nuevo usuario</p>
+
+            <form method="post" action="." enctype="multipart/form-data">
+                <div class="card card-default">
+                    <div class="card-header">
+                        <h3 class="card-title">
+                            {% if action == 'add' %}
+                            <i class="fas fa-plus"></i>
+                            {% else %}
+                            <i class="fas fa-edit"></i>
+                            {% endif %}
+                            {{ title }}
+                        </h3>
+                    </div>
+                </div>
+
+                <div class="card-body">
+                    {% csrf_token %}
+                    <input type="hidden" name="action" value="{{ action }}">
+                    {% if form.errors %}
+                    <div class="alert alert-danger alert-dismissible">
+                        <button type="button" class="close" data-dismiss="alert" aria-hidden="true">x</button>
+                        <h5><i class="icon fas fa-ban"></i> Ha ocurrido un error al guardar registro </h5>
+                        <ul>
+                            {% for field in form %}
+                            {% for error in field.error %}
+                            <li> {{ error }}</li>
+                            {% endfor %}
+                            {% endfor %}
+                        </ul>
+                    </div>
+                    {% endif %}
+
+                    {% for field in form.visible_fields %}
+                    <div class="form-group">
+                        <label for="exampleInputEmail1">{{ field.label }}:</label>
+                        {{ field|add_class:'form-control'|attr:'autocomplete:off' }}
+                    </div>
+                    {% endfor%}
+
+                </div>
+                <!-- /.card-body -->
+
+                <div class="card-footer">
+                    <button type="submit" class="btn btn-primary btn-flat" id="classify_button">
+                        <i class="fas fa-save"></i> Guardar registro
+                    </button>
+                    <a href="{% url 'index' %}" class="btn btn-danger btn-flat">
+                        <i class="fas fa-times"></i> Cancelar
+                    </a>
+                </div>
+            </form>
+<script>
+        {% if form.errors %}
+            var errors = '';
+            {% for field in form %}
+                {% for error in field.errors %}
+                    errors += '{{ error }}\n';
+                {% endfor %}
+            {% endfor %}
+            {% for error in form.non_field_errors %}
+                errors += '{{ error }}\n';
+            {% endfor %}
+            Swal.fire({
+                title: 'Error!',
+                text: errors,
+                icon: 'error'
+            });
+        {% endif %}
+
+        $('form').on('submit', function (e) {
+            e.preventDefault();
+            var parameters = $(this).serializeArray();
+            submit_with_ajax(window.location.pathname, 'Notificación', '¿Estas seguro de realizar la siguiente acción?', parameters, function () {
+                location.href = '{% url 'login' %}';
+        });
+    });
+
+</script>
+
+
+            <a href="{% url 'login' %}" class="text-center">Ya tengo una cuenta</a>
+        </div>
+        <!-- /.form-box -->
+    </div>
+</div>
+<!-- /.card -->
+</div>
+
+</body>
+</html>

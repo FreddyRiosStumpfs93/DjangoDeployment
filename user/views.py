@@ -11,6 +11,8 @@ from django.contrib.auth.mixins import LoginRequiredMixin
 from user.models import User
 from user.forms import UserForm
 
+import DjangoAPI.settings as setting
+
 class UserListView(LoginRequiredMixin, ListView):
     model = User
     template_name = 'user/list.html'
@@ -155,4 +157,39 @@ class UserDeleteView(LoginRequiredMixin, DeleteView):
         context['title'] = 'Eliminar usuario'
         context['entity'] = 'Usuarios'
         context['list_url'] = self.success_url
+        return context
+
+
+class UserCreateView2(CreateView):
+    model = User
+    form_class = UserForm
+    template_name = 'user/register.html'
+    success_url = 'login'
+
+    def dispatch(self, request, *args, **kwargs):
+        return super().dispatch(request, *args, **kwargs)
+
+    """
+    Ejemplo de como actúa el método post al hacer submit 
+    """
+    def post(self, request, *args, **kwargs):
+        data = {}
+        try:
+            action = request.POST['action']
+            if action == 'add':
+                form = self.get_form()
+                data = form.save()
+            else:
+                data['error'] = 'No ha ingresado ninguna accion'
+            # data = Chapter.objects.get(pk=request.POST['id']).toJSON()
+        except Exception as e:
+            data['error'] = str(e)
+        return JsonResponse(data)
+
+    def get_context_data(self, **kwargs):
+        context = super().get_context_data(**kwargs)
+        context['title'] = 'Creación de usuario'
+        context['entity'] = 'Usuarios'
+        context['list_url'] = self.success_url
+        context['action'] = 'add'
         return context
